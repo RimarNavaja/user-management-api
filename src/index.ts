@@ -1,13 +1,22 @@
-import express from 'express';
-import userRoutes from './routes/users';
+import "reflect-metadata";
+import app from "./app";
+import { initializeDatabase } from "./config/database";
 
-const app = express();
-app.use(express.json());
+const PORT = 3000;
 
-// Register user routes
-app.use('/api/users', userRoutes);
+const startServer = async () => {
+  try {
+    // Initialize the database connection
+    await initializeDatabase();
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+    // Start the Express server
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
