@@ -12,3 +12,9 @@ export default router;
 // POST create a new user
 router.post("/", userController.createUser);
 
+// GET all users
+router.get("/", userController.getAllUsers);
+
+// GET a specific user by ID
+router.get("/:id", userController.getUserById);
+
